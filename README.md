@@ -7,7 +7,7 @@
 
 ## 上手指南
 
-请参考 [快速上手指南](https://github.com/lenye/postpoint/tree/main/docs/guide.md)
+请参考 [快速上手指南](https://github.com/lenye/postpoint/tree/main/docs/快速上手指南.md)
 
 ## 支持的操作系统
 
