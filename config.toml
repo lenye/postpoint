@@ -1,30 +1,30 @@
-## 企业微信群机器人
-#[provider.workweixin_bot]
-## webhook
-#endpoint.url = "https://qyapi.weixin.qq.com/cgi-bin/webhook/send?key=xxx"
+# 企业微信群机器人
+[provider.workweixin_bot]
+# webhook
+endpoint.url = "https://qyapi.weixin.qq.com/cgi-bin/webhook/send?key=xxx"
 
-## 钉钉自定义机器人
-#[provider.dingtalk_bot]
-## webhook
-#endpoint.url = "https://oapi.dingtalk.com/robot/send?access_token=xxx"
-## 密钥
-#secret = "xxx"
+# 钉钉自定义机器人
+[provider.dingtalk_bot]
+# webhook
+endpoint.url = "https://oapi.dingtalk.com/robot/send?access_token=xxx"
+# 密钥
+secret = "xxx"
 
-## 飞书自定义机器人
-#[provider.feishu_bot]
-## webhook
-#endpoint.url = "https://open.feishu.cn/open-apis/bot/v2/hook/xxx"
-## 密钥
-#secret = "xxx"
+# 飞书自定义机器人
+[provider.feishu_bot]
+# webhook
+endpoint.url = "https://open.feishu.cn/open-apis/bot/v2/hook/xxx"
+# 密钥
+secret = "xxx"
 
-## 失败重试
-#[deliver.retry]
-## 重试次数 0=不重试
-#count = 2
-## 间隔时间单位秒，最大30分钟=1800秒
-#interval = 30
+# 失败重试
+[deliver.retry]
+# 重试次数 0=不重试
+count = 2
+# 间隔时间单位秒，最大30分钟=1800秒
+interval = 30
 
-## api 端口配置
-#[api]
-## 默认值
-#port = 39270
+# api 端口配置
+[api]
+# 默认值
+port = 39270

@@ -9,14 +9,35 @@
 
 `postpoint`下载 [最新版本](https://github.com/lenye/postpoint/releases)
 
-配置文件下载 [config.toml](https://github.com/lenye/postpoint/tree/main/config.toml)
+配置样例文件下载 [config.toml](https://github.com/lenye/postpoint/tree/main/config.toml)，替换 xxx 为你的机器人
+key，删除不使用的机器人配置
 
 **windows 系统**
 
 1. 解压下载文件`postpoint_v26.6.1_windows_x86_64.zip`；
 2. 创建`config.toml`配置文件，保存到`postpoint.exe`相同目录下，配置**机器人参数**；
+    ```toml
+    # 企业微信群机器人
+    [provider.workweixin_bot]
+    # webhook
+    endpoint.url = "https://qyapi.weixin.qq.com/cgi-bin/webhook/send?key=xxx"
+    ```
+   替换 xxx 为你的机器人 key
 3. 运行`postpoint.exe test`，测试配置是否正确；
+   ```shell
+   c:\>postpoint.exe test
+   2025-06-14T10:10:23.771+0800    info    postpoint       {"Version": "26.6.1", "Web": "https://github.com/lenye/postpoint", "OS/Arch": "windows/amd64"}
+   2025-06-14T10:10:23.788+0800    info    测试    {"text": "postpoint 测试消息\n\n就到这儿吧！我要去睡今天的第三个午觉了。\n\n\n使用 postpoint 发送\ngithub.com/lenye/postpoint"}
+   2025-06-14T10:10:24.081+0800    info    企业微信群机器人        发送成功
+   2025-06-14T10:10:24.081+0800    info    config.toml 未配置钉钉自定义机器人
+   2025-06-14T10:10:24.081+0800    info    config.toml 未配置飞书自定义机器人
+   ```
 4. 运行`postpoint.exe serve`，开始消息推送 API 服务；
+   ```shell
+   c:\>postpoint.exe serve
+   2025-06-14T10:14:53.627+0800    info    postpoint       {"Version": "26.6.1", "Web": "https://github.com/lenye/postpoint", "OS/Arch": "windows/amd64"}
+   2025-06-14T10:14:53.667+0800    info    api     http server listening on [::]:39270
+   ```   
 
 ### 支持的操作系统
 
