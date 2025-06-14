@@ -7,14 +7,14 @@ endpoint.url = "https://qyapi.weixin.qq.com/cgi-bin/webhook/send?key=xxx"
 [provider.dingtalk_bot]
 # webhook 地址
 endpoint.url = "https://oapi.dingtalk.com/robot/send?access_token=xxx"
-# 密钥
+# 签名密钥
 secret = "xxx"
 
 # 飞书自定义机器人
 [provider.feishu_bot]
 # webhook 地址
 endpoint.url = "https://open.feishu.cn/open-apis/bot/v2/hook/xxx"
-# 密钥
+# 签名密钥
 secret = "xxx"
 
 # 失败重试
