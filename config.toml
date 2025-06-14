@@ -1,18 +1,18 @@
 # 企业微信群机器人
 [provider.workweixin_bot]
-# webhook url
+# webhook 地址
 endpoint.url = "https://qyapi.weixin.qq.com/cgi-bin/webhook/send?key=xxx"
 
 # 钉钉自定义机器人
 [provider.dingtalk_bot]
-# webhook url
+# webhook 地址
 endpoint.url = "https://oapi.dingtalk.com/robot/send?access_token=xxx"
 # 密钥
 secret = "xxx"
 
 # 飞书自定义机器人
 [provider.feishu_bot]
-# webhook url
+# webhook 地址
 endpoint.url = "https://open.feishu.cn/open-apis/bot/v2/hook/xxx"
 # 密钥
 secret = "xxx"
