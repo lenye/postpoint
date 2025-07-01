@@ -18,10 +18,10 @@ endpoint.url = "https://open.feishu.cn/open-apis/bot/v2/hook/xxx"
 secret = "xxx"
 
 # 失败重试
-[deliver.retry]
+[delivery.retry]
 # 重试次数 0=不重试
-count = 2
-# 间隔时间单位秒，最大30分钟=1800秒
+count = 3
+# 间隔时间单位秒，最大1800秒=30分钟
 interval = 30
 
 # api 端口配置
