@@ -18,7 +18,7 @@ Usage:
 
 Available Commands:
   help        Help about any command
-  serve       api 和 swagger 服务，消息推送服务
+  serve       API / OpenAPI / Swagger UI 服务，消息推送服务
   test        测试配置的企业微信群机器人，飞书自定义机器人，钉钉自定义机器人
 
 Flags:
