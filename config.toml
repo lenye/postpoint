@@ -5,14 +5,7 @@ endpoint.url = "https://qyapi.weixin.qq.com/cgi-bin/webhook/send?key=xxx"
 # 每分钟最高速率=18次，最多20次
 rate_limit.minute.max_burst = 18
 
-# 钉钉自定义机器人
-[provider.dingtalk_bot]
-# webhook 地址
-endpoint.url = "https://oapi.dingtalk.com/robot/send?access_token=xxx"
-# 签名密钥
-secret = "xxx"
-# 每分钟最高速率=18次，最多20次
-rate_limit.minute.max_burst = 18
+
 
 # 飞书自定义机器人
 [provider.feishu_bot]
@@ -23,12 +16,27 @@ secret = "xxx"
 # 每分钟最高速率=90次，最多100次
 rate_limit.minute.max_burst = 90
 
-## 失败重试，默认不重试
-#[delivery.retry]
-## 重试次数 0=不重试
-#count = 3
-## 间隔时间，单位秒，最大900秒=15分钟
-#interval = 30
+
+
+# 钉钉自定义机器人
+[provider.dingtalk_bot]
+# webhook 地址
+endpoint.url = "https://oapi.dingtalk.com/robot/send?access_token=xxx"
+# 签名密钥
+secret = "xxx"
+# 每分钟最高速率=18次，最多20次
+rate_limit.minute.max_burst = 18
+
+
+
+# 失败重试，默认不重试
+[delivery.retry]
+# 重试次数 0=不重试
+count = 0
+# 间隔时间，单位秒，最大900秒=15分钟
+interval = 5
+
+
 
 # api 端口配置
 [api]
