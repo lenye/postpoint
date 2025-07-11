@@ -1,7 +1,7 @@
 # 企业微信群机器人
 [provider.workweixin_bot]
 # webhook 地址
-endpoint.url = "https://qyapi.weixin.qq.com/cgi-bin/webhook/send?key=xxx"
+endpoint.url = "https://qyapi.weixin.qq.com/cgi-bin/webhook/send?key=xxxxxx"
 # 每分钟最高速率=18次，最多20次
 rate_limit.minute.burst = 18
 
@@ -10,7 +10,7 @@ rate_limit.minute.burst = 18
 # 飞书自定义机器人
 [provider.feishu_bot]
 # webhook 地址
-endpoint.url = "https://open.feishu.cn/open-apis/bot/v2/hook/xxx"
+endpoint.url = "https://open.feishu.cn/open-apis/bot/v2/hook/xxxxxx"
 # 签名密钥
 secret = "xxx"
 # 每分钟最高速率=99次，最多100次
@@ -23,11 +23,16 @@ rate_limit.rate.frequency = 4
 # 钉钉自定义机器人
 [provider.dingtalk_bot]
 # webhook 地址
-endpoint.url = "https://oapi.dingtalk.com/robot/send?access_token=xxx"
+endpoint.url = "https://oapi.dingtalk.com/robot/send?access_token=xxxxxx"
 # 签名密钥
 secret = "xxx"
-# 默认速率：1 次/秒，最多 19 次/分钟；
 
+
+
+# Slack机器人
+[provider.slack_bot]
+# webhook 地址
+endpoint.url = "https://hooks.slack.com/services/T00000000/B00000000/XXXXXXXXXXXXXXXXXXXXXXXX"
 
 
 
