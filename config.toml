@@ -13,8 +13,8 @@ rate_limit.minute.burst = 18
 endpoint.url = "https://open.feishu.cn/open-apis/bot/v2/hook/xxxxxx"
 # 签名密钥
 secret = "xxx"
-# 每分钟最高速率=99次，最多100次
-rate_limit.minute.burst = 99
+# 每分钟最高速率=98次，最多100次
+rate_limit.minute.burst = 98
 # 每秒4次，最多5次
 rate_limit.rate.frequency = 4
 
@@ -49,3 +49,14 @@ interval = 10
 [api]
 # 默认值
 port = 39270
+
+
+
+# 日志配置
+[log]
+# 屏幕显示
+console = true
+# 保存到文件，日志文件在 log 目录
+file = true
+# 日志级别: debug, info, warn, error
+level = "info"
