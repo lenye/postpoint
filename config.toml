@@ -36,6 +36,17 @@ endpoint.url = "https://hooks.slack.com/services/T00000000/B00000000/XXXXXXXXXXX
 
 
 
+# Webhook 文档: provider_webhook.md
+[provider.webhook]
+# webhook 地址
+endpoint.url = "http://localhost/xxxxxx"
+# webhook http method，可选用一个: GET、POST、PUT、PATCH、DELETE，默认=POST
+endpoint.method = "POST"
+# 可选用一个: json、form，默认=json
+content_type = "json"
+
+
+
 # 失败重试
 [delivery.retry]
 # 重试次数 0=不重试
@@ -47,6 +58,8 @@ interval = 10
 
 # api 端口配置
 [api]
+# Host = "localhost"，只能在本机访问 API；Host = ""，可以对外服务。
+Host = "localhost"
 # 默认值
 port = 39270
 
