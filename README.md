@@ -37,3 +37,7 @@ Use "postpoint [command] --help" for more information about a command.
 ## 贡献
 
 欢迎创建 [Issue](https://github.com/lenye/postpoint/issues) 来帮助改进项目。
+
+## 免责声明
+
+本软件仅供学习和研究之用，使用此软件的风险由你自行承担，我们对使用该软件时产生的任何损失概不负责。
