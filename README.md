@@ -34,14 +34,14 @@ Use "postpoint [command] --help" for more information about a command.
 
 ### 安装`PostPoint`
 
-`PostPoint`下载 [最新版本](https://github.com/lenye/postpoint/releases/tag/v25.7.5)
+`PostPoint`下载 [最新版本](https://github.com/lenye/postpoint/releases/tag/v25.7.6-beta3)
 
 样例配置文件 [config.toml](config.toml)
 
 #### windows 操作系统
 
-1. 解压下载文件`postpoint_v25.7.5_windows_x86_64.zip`；
-2. 创建`config.toml`配置文件，保存到`postpoint.exe`相同目录下，配置**企业微信群机器人**；
+1. 解压下载文件`postpoint_v25.7.6-beta3_windows_x86_64.zip`；
+2. 创建`config.toml`配置文件，保存到`postpoint.exe`相同目录下，配置一个新通道：**企业微信群机器人**；
     ```toml
     # 企业微信群机器人
     [provider.workweixin_bot]
@@ -49,7 +49,7 @@ Use "postpoint [command] --help" for more information about a command.
     endpoint.url = "https://qyapi.weixin.qq.com/cgi-bin/webhook/send?key=xxx"
     ```
    endpoint.url 填写成你的企业微信群机器人 webhook 地址
-3. 运行`postpoint.exe test`，测试配置是否正确；
+3. 运行`postpoint.exe test`，测试发送消息到配置的通道；
    ```shell
    C:\>postpoint.exe test
    2025-07-01T22:07:01.788+0800    info    测试    {"text": "postpoint 测试消息\n\n就到这儿吧！我要去睡今天的第三个午觉了。"}
@@ -58,9 +58,13 @@ Use "postpoint [command] --help" for more information about a command.
 4. 运行`postpoint.exe serve`，开始消息推送 API 服务；
    ```shell
    C:\>postpoint.exe serve
-   2025-07-01T22:07:01.627+0800    info    PostPoint Free v25.7.5 windows/amd64, https://github.com/lenye/postpoint
+   2025-07-01T22:07:01.627+0800    info    PostPoint Free v25.7.6-beta3 windows/amd64, https://github.com/lenye/postpoint
    2025-07-01T22:07:01.667+0800    info    url    {"API": "http://localhost:39270/text", "Swagger UI": "http://localhost:39270/swagger/", "OpenAPI": "http://localhost:39270/swagger/openapi.yaml"}
    ```   
+
+运行`postpoint.exe test -h`查看通道的测试命令。
+
+单独测试企业微信群机器人，运行`postpoint.exe test workweixin_bot`。
 
 #### 完成
 
