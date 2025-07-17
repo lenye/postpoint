@@ -1,4 +1,4 @@
-# PostPoint，一个 API，连接所有核心工作群。
+# PostPoint 一个 API，连接所有核心工作群
 
 PostPoint 提供了一个统一、高可用的 API 接口，你无需关心各平台的接口差异和复杂的频率限制，
 只需一次集成，即可将业务系统的关键通知，稳定、即时地发送到任何主流工作平台和自定义 Webhook。
@@ -162,7 +162,7 @@ SDK。
 
 下面是使用 curl 发送一个消息的示例，消息内容：测试，测试，测试
 
-1. 发送 JSON 数据
+1. 发送 json 数据
     ```shell
     # linux 环境
     $ curl -X 'POST' 'http://localhost:39270/text' \
@@ -177,7 +177,7 @@ SDK。
       -H "Content-Type: application/json" ^
       -d "{\"msg\": \"测试，测试，测试\"}"         
     ```
-2. 发送 Form 数据
+2. 发送 form 数据
     ```shell
     # linux 环境
     $ curl -X 'POST' 'http://localhost:39270/text' \
