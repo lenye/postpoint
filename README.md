@@ -1,8 +1,11 @@
-# PostPoint
+# PostPoint，一个 API，连接所有核心工作群。
 
-通过 PostPoint 的统一 API，轻松实现发送消息到企业微信群机器人、飞书自定义机器人、钉钉自定义机器人、Slack机器人、Webhook，无需单独开发，立即开始自动化业务通知！
+PostPoint 提供了一个统一、高可用的 API 接口，你无需关心各平台的接口差异和复杂的频率限制，
+只需一次集成，即可将业务系统的关键通知，稳定、即时地发送到任何主流工作平台和自定义 Webhook。
 
-帮助你快速构建消息推送系统，可设置**失败重试**，遵守各平台消息**调用频率**。
+* 极致简化： 单一 API，告别重复开发和维护。
+* 智能可靠： 内置失败自动重试，并智能遵守各平台发送频率，确保消息100%稳定触达。
+* 全面覆盖： 无缝支持企业微信、飞书、钉钉、Slack 及自定义 Webhook。
 
 ## 支持的操作系统
 
@@ -72,12 +75,25 @@ Use "postpoint [command] --help" for more information about a command.
 
 ## 调用 API 发送消息
 
-API 请求和响应数据编码皆为 UTF-8 格式，发送消息使用 HTTP POST 请求。
+* HTTP 方法: POST
+* Endpoint: http://localhost:39270/text
+* 数据格式: 请求和响应数据编码均为 UTF-8。支持 application/json 和 application/x-www-form-urlencoded 两种提交方式。
 
-数据的提交方式：
+### 请求参数
 
-1. json 提交：application/json
-2. form 提交：application/x-www-form-urlencoded
+请求体 (Body)
+
+| 参数名   | 类型     | 必填 | 描述   |
+|:------|:-------|:---|:-----|
+| `msg` | string | 是  | 消息内容 |
+
+### 响应数据
+
+| 字段名    | 类型     | 描述                       |
+|:-------|:-------|:-------------------------|
+| `code` | string | 结果代码，`ok` 表示成功。          |
+| `msg`  | string | 结果描述。                    |
+| `id`   | string | 本次请求的唯一 ID，可用于问题排查和日志跟踪。 |
 
 使用 API 发送消息，发出如下所示的 HTTP POST 请求：
 
@@ -90,7 +106,9 @@ Content-type: application/json
 }
 ```
 
-收到 HTTP 200 响应，表示消息已成功发布；
+#### 成功响应
+
+当消息成功进入 PostPoint 的发送队列时，将收到 `HTTP 200 OK` 响应。
 
 ```
 HTTP/1.1 200 OK
@@ -98,11 +116,14 @@ Content-Type: application/json; charset=utf-8
 
 {
     "code": "ok",
+    "msg": "success",
     "id": "1234567EC64G97ZRAS211JHHX7"
 }
 ```
 
-其他 HTTP 状态码，表示错误请求，例如: "HTTP 400 Bad Request", "HTTP 404 Not Found", "405 Method Not Allowed"
+#### 失败响应
+
+当请求本身存在问题时（如参数错误、Token 无效），将收到 `4xx` 或 `5xx` 的 HTTP 状态码。
 
 ```
 HTTP/1.1 400 Bad Request
@@ -114,6 +135,17 @@ Content-Type: application/json; charset=utf-8
     "id": "1234567EC64G97ZRAS211JHHX8"
 }
 ```
+
+#### 通用错误码
+
+| HTTP 状态码                    | `code` 值             | 描述                         |
+|:----------------------------|:---------------------|:---------------------------|
+| `400 Bad Request`           | `invalid_argument`   | 请求参数无效或缺失。`msg` 字段会提供详细信息。 |
+| `401 Unauthorized`          | `unauthenticated`    | 无效的令牌，请检查 Token 是否正确。      |
+| `404 Not Found`             | `not_found`          | url 不存在或已被删除。              |
+| `405 Method Not Allowed`    | `method_not_allowed` | 请求方法错误，请使用 `POST` 方法。      |
+| `429 Too Many Requests`     | `resource_exhausted` | 请求频率过高，请稍后重试。              |
+| `500 Internal Server Error` | `internal`           | PostPoint 服务器内部错误，请联系我们处理。 |
 
 ### 使用 Swagger UI
 
@@ -130,7 +162,7 @@ SDK。
 
 下面是使用 curl 发送一个消息的示例，消息内容：测试，测试，测试
 
-1. json 提交
+1. 发送 JSON 数据
     ```shell
     # linux 环境
     $ curl -X 'POST' 'http://localhost:39270/text' \
@@ -145,7 +177,7 @@ SDK。
       -H "Content-Type: application/json" ^
       -d "{\"msg\": \"测试，测试，测试\"}"         
     ```
-2. form 提交
+2. 发送 Form 数据
     ```shell
     # linux 环境
     $ curl -X 'POST' 'http://localhost:39270/text' \
@@ -161,11 +193,38 @@ SDK。
       -d "msg=测试，测试，测试"
     ```
 
-日志
+### 使用 Python
 
-```shell
-2025-07-01T22:07:55.496+0800    info    api    新消息    {"id": "1234567EC64G97ZRAS211JHHX7", "msg": "测试，测试，测试"}
-2025-07-01T22:07:55.837+0800    info    delivery.workweixin_bot    成功    {"id": "1234567EC64G97ZRAS211JHHX7", "span_id": "1.1", "耗时": "339.7873ms"}
+```python
+import requests
+import json
+
+postpoint_url = f"http://localhost:39270/text"
+
+payload = {
+    "msg": "来自 Python 的监控告警：\n> 服务 **API-Gateway** 在 5 分钟内错误率超过 5%。"
+}
+
+headers = {
+    'Content-Type': 'application/json'
+}
+
+try:
+    response = requests.post(postpoint_url, headers=headers, data=json.dumps(payload), timeout=10)
+    response.raise_for_status()  # 如果状态码不是 2xx，则会抛出异常
+
+    # 打印成功响应
+    print("请求成功!")
+    print(f"状态码: {response.status_code}")
+    print(f"响应内容: {response.json()}")
+
+except requests.exceptions.RequestException as e:
+    # 打印错误响应
+    print(f"请求失败: {e}")
+    if e.response:
+        print(f"状态码: {e.response.status_code}")
+        print(f"响应内容: {e.response.text}")
+
 ```
 
 ## 贡献
