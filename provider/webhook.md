@@ -1,4 +1,4 @@
-## provider.webhook
+## Webhook
 
 Webhook 允许将 PostPoint 收到的消息转发到任何支持 HTTP 请求的自定义系统，例如你自己的内部 API、自动化工作流（如Zapier/n8n）或日志聚合服务。
 
