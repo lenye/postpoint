@@ -33,8 +33,9 @@ secret = "xxx"
 [provider.slack_bot]
 # webhook 地址
 endpoint.url = "https://hooks.slack.com/services/T00000000/B00000000/XXXXXXXXXXXXXXXXXXXXXXXX"
-# 通道代理，没有配置代理默认使用全局代理；可指定不使用代理 proxy="no"
+# 通道代理：没有配置代理使用全局代理；配置了代理，通道使用自己的代理；配置不使用代理 proxy="no"。
 #proxy = "http://127.0.0.1:1080"
+
 
 
 # Webhook 文档: provider_webhook.md
@@ -50,10 +51,12 @@ content_type = "json"
 
 # 发送消息
 [delivery]
-# 全局代理，所有通道使用这个代理，除非通道自己配置了代理
+# 全局代理：所有通道使用这个代理，除非通道自己配置了代理；
 # 代理url格式：
 #   socks5://username:password@proxy_server_ip:port
+#   socks5://username:password@proxy_server_domain:port
 #   http://username:password@proxy_server_ip:port
+#   https://username:password@proxy_server_domain:port
 #proxy = "http://127.0.0.1:1080"
 
 # 失败重试
