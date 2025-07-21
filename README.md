@@ -39,8 +39,6 @@ Use "postpoint [command] --help" for more information about a command.
 
 `PostPoint`下载 [最新版本](https://github.com/lenye/postpoint/releases/tag/v25.7.7-beta1)
 
-样例配置文件 [config.toml](config.toml)
-
 #### windows 操作系统
 
 1. 解压下载文件`postpoint_v25.7.7-beta1_windows_x86_64.zip`；
@@ -72,6 +70,10 @@ Use "postpoint [command] --help" for more information about a command.
 #### 完成
 
 如果你顺利完成了以上步骤，那么恭喜你，属于你的`PostPoint`搭建成功。
+
+### 通道集成指南
+
+`PostPoint`配置文件的详细定义，请参考[通道集成指南](provider/README.md)，样例配置文件 [config.toml](config.toml)
 
 ## 调用 API 发送消息
 
