@@ -1,63 +1,83 @@
 # 企业微信群机器人
 [provider.workweixin_bot]
+
 # [必填] Webhook 服务器地址
 endpoint.url = "https://qyapi.weixin.qq.com/cgi-bin/webhook/send?key=xxxxxx"
+
 # [可选] 每分钟最高速率=18次，最多20次
 rate_limit.minute.burst = 18
 
 
 
+
 # 飞书自定义机器人
 [provider.feishu_bot]
+
 # [必填] Webhook 服务器地址
 endpoint.url = "https://open.feishu.cn/open-apis/bot/v2/hook/xxxxxx"
+
 # [可选] 签名密钥
 secret = "xxx"
+
 # [可选] 每分钟最高速率=98次，最多100次
 rate_limit.minute.burst = 98
+
 # [可选] 每秒4次，最多5次
 rate_limit.rate.frequency = 4
 
 
 
+
 # 钉钉自定义机器人
 [provider.dingtalk_bot]
+
 # [必填] Webhook 服务器地址
 endpoint.url = "https://oapi.dingtalk.com/robot/send?access_token=xxxxxx"
+
 # [可选] 签名密钥
 secret = "xxx"
 
 
 
+
 # Slack机器人
 [provider.slack_bot]
+
 # [必填] Webhook 服务器地址
 endpoint.url = "https://hooks.slack.com/services/T00000000/B00000000/XXXXXXXXXXXXXXXXXXXXXXXX"
+
 # [可选] 通道代理：没有配置代理使用全局代理；配置了代理，通道使用自己的代理；配置不使用代理 proxy="no"。
 #proxy = "http://127.0.0.1:1080"
 
 
 
+
 # Webhook 文档: provider/webhook.md
 [provider.webhook]
+
 # [必填] Webhook 服务器地址
 endpoint.url = "https://your-service.com/webhook"
+
 # [可选] HTTP 请求方法
 # 支持: "GET", "POST", "PUT", "PATCH", "DELETE"。
 # 默认值: "POST"
 endpoint.method = "POST"
+
 # [可选] 发送数据时使用的 Content-Type
 # 支持: "json" (application/json) 或 "form" (application/x-www-form-urlencoded)。
 # 当 method = "GET" 时，此选项无效，数据将以 URL 查询参数形式发送。
 # 默认值: "json"
 content_type = "json"
+
 # [可选] 通道代理
 #proxy = "http://127.0.0.1:1080"
+
 # [可选] 自定义 HTTP 请求头。
 # 可用于身份验证，例如传递一个固定的 Api-Key。
 [provider.webhook.headers]
 X-Api-Key = "your-secret-auth-token"
 X-Source = "PostPoint"
+
 
 
 
@@ -73,31 +93,40 @@ X-Source = "PostPoint"
 
 # [可选] 失败重试
 [delivery.retry]
+
 # 重试次数 0=不重试
 count = 5
+
 # 间隔时间，单位秒，最大900秒=15分钟
 interval = 10
 
 
 
+
 # api 端口配置
 [api]
+
 # [可选] host="localhost"，只能在本机访问；host=""，可以对外服务。
 # 默认值: ""
 host = "localhost"
+
 # [可选] api 服务监听端口
 # 默认值: 39270
 port = 39270
 
 
 
+
 # 日志配置
 [log]
+
 # 屏幕显示
 console = true
+
 # [可选] 保存到文件，日志文件在 log 目录
 # 默认值: false
 file = true
+
 # [可选] 日志级别: debug, info, warn, error
 # 默认值: "info"
 level = "info"
