@@ -148,6 +148,7 @@ Content-Type: application/json
 | `405 Method Not Allowed`    | `method_not_allowed` | 请求方法错误，请使用 `POST` 方法。      |
 | `429 Too Many Requests`     | `resource_exhausted` | 请求频率过高，请稍后重试。              |
 | `500 Internal Server Error` | `internal`           | PostPoint 服务器内部错误，请联系我们处理。 |
+| `503 Service Unavailable`   | `unavailable`        | PostPoint 许可证到期，请联系我们处理。   |
 
 ### 使用 Swagger UI
 
