@@ -5,7 +5,7 @@ PostPoint 提供了一个统一、高可用的 API 接口，你无需关心各�
 
 * 极致简化： 单一 API，告别重复开发和维护。
 * 智能可靠： 内置失败自动重试，并智能遵守各平台发送频率，确保消息100%稳定触达。
-* 全面覆盖： 无缝支持企业微信、飞书、钉钉、Slack 及通用Webhook。
+* 全面覆盖： 无缝支持企业微信、飞书、钉钉、Slack、Discord 及通用Webhook。
 
 ## 支持的操作系统
 
@@ -18,7 +18,7 @@ PostPoint 提供了一个统一、高可用的 API 接口，你无需关心各�
 
 ```shell
 C:\>postpoint.exe -h
-一个 API 请求将消息发送到企业微信、飞书、钉钉、Slack、Webhook
+一个 API 请求将消息发送到企业微信、飞书、钉钉、Slack、Discord、Webhook
 
 Usage:
   postpoint [command]
@@ -26,7 +26,7 @@ Usage:
 Available Commands:
   help        Help about any command
   serve       API / OpenAPI / Swagger UI 服务，消息推送服务
-  test        测试已配置的企业微信群机器人、飞书自定义机器人、钉钉自定义机器人、Slack机器人、Webhook
+  test        测试已配置的企业微信群机器人、飞书自定义机器人、钉钉自定义机器人、Slack机器人、Discord机器人、Webhook
 
 Flags:
   -h, --help      help for postpoint
@@ -37,11 +37,11 @@ Use "postpoint [command] --help" for more information about a command.
 
 ### 安装`PostPoint`
 
-`PostPoint`下载 [最新版本](https://github.com/lenye/postpoint/releases/tag/v25.7.7-beta2)
+`PostPoint`下载 [最新版本](https://github.com/lenye/postpoint/releases/tag/v25.7.8-beta1)
 
 #### windows 操作系统
 
-1. 解压下载文件`postpoint_v25.7.7-beta2_windows_x86_64.zip`；
+1. 解压下载文件`postpoint_v25.7.8-beta1_windows_x86_64.zip`；
 2. 创建`config.toml`配置文件，保存到`postpoint.exe`相同目录下，配置一个新通道：**企业微信群机器人**；
     ```toml
     # 企业微信群机器人
@@ -59,7 +59,7 @@ Use "postpoint [command] --help" for more information about a command.
 4. 运行`postpoint.exe serve`，开始消息推送 API 服务；
    ```shell
    C:\>postpoint.exe serve
-   2025-07-01T22:07:01.627+0800    info    PostPoint Free v25.7.7-beta2 windows/amd64, https://github.com/lenye/postpoint
+   2025-07-01T22:07:01.627+0800    info    PostPoint Free v25.7.8-beta1 windows/amd64, https://github.com/lenye/postpoint
    2025-07-01T22:07:01.667+0800    info    url    {"API": "http://localhost:39270/text", "Swagger UI": "http://localhost:39270/swagger/", "OpenAPI": "http://localhost:39270/swagger/openapi.yaml"}
    ```   
 
@@ -91,11 +91,11 @@ Use "postpoint [command] --help" for more information about a command.
 
 ### 响应数据
 
-| 字段名    | 类型     | 描述                       |
-|:-------|:-------|:-------------------------|
-| `code` | string | 结果代码，`ok` 表示成功。          |
-| `msg`  | string | 结果描述。                    |
-| `id`   | string | 本次请求的唯一 ID，可用于问题排查和日志跟踪。 |
+| 字段名    | 类型     | 描述                      |
+|:-------|:-------|:------------------------|
+| `code` | string | 结果代码，`ok` 表示成功          |
+| `msg`  | string | 结果描述                    |
+| `id`   | string | 本次请求的唯一 ID，可用于问题排查和日志跟踪 |
 
 使用 API 发送消息，发出如下所示的 HTTP POST 请求：
 
@@ -140,15 +140,15 @@ Content-Type: application/json
 
 #### 通用错误码
 
-| HTTP 状态码                    | `code` 值             | 描述                         |
-|:----------------------------|:---------------------|:---------------------------|
-| `400 Bad Request`           | `invalid_argument`   | 请求参数无效或缺失。`msg` 字段会提供详细信息。 |
-| `401 Unauthorized`          | `unauthenticated`    | 无效的令牌，请检查 token 是否正确。      |
-| `404 Not Found`             | `not_found`          | url 不存在或已被删除。              |
-| `405 Method Not Allowed`    | `method_not_allowed` | 请求方法错误，请使用 `POST` 方法。      |
-| `429 Too Many Requests`     | `resource_exhausted` | 请求频率过高，请稍后重试。              |
-| `500 Internal Server Error` | `internal`           | PostPoint 服务器内部错误，请联系我们处理。 |
-| `503 Service Unavailable`   | `unavailable`        | PostPoint 许可证到期，请联系我们处理。   |
+| HTTP 状态码                    | `code` 值             | 描述                        |
+|:----------------------------|:---------------------|:--------------------------|
+| `400 Bad Request`           | `invalid_argument`   | 请求参数无效或缺失。`msg` 字段会提供详细信息 |
+| `401 Unauthorized`          | `unauthenticated`    | 无效的令牌，请检查 token 是否正确      |
+| `404 Not Found`             | `not_found`          | url 不存在或已被删除              |
+| `405 Method Not Allowed`    | `method_not_allowed` | 请求方法错误，请使用 `POST` 方法      |
+| `429 Too Many Requests`     | `resource_exhausted` | 请求频率过高，请稍后重试              |
+| `500 Internal Server Error` | `internal`           | PostPoint 服务器内部错误，请联系我们处理 |
+| `503 Service Unavailable`   | `unavailable`        | PostPoint 许可证到期，请联系我们处理   |
 
 ### 使用 Swagger UI
 

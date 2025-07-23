@@ -26,7 +26,7 @@ endpoint.url = "https://your-service.com/webhook"
 endpoint.method = "POST"
 
 # [可选] 发送数据时使用的 Content-Type。
-# 支持: "json" (application/json) 或 "form" (application/x-www-form-urlencoded)。
+# 支持: "json" (application/json; charset=utf-8) 或 "form" (application/x-www-form-urlencoded)。
 # 当 method = "GET" 时，此选项无效，数据将以 URL 查询参数形式发送。
 # 默认值: "json"
 content_type = "json"
@@ -44,11 +44,11 @@ PostPoint 在调用 Webhook 时，会发送一个包含消息上下文的结构�
 
 #### 负载结构
 
-| 字段名        | 类型     | 描述                     |
-|:-----------|:-------|:-----------------------|
-| `id`       | string | 原始 API 请求的唯一 ID，可用于追踪。 |
-| `msg_type` | string | 原始消息类型 (`text`)。       |
-| `msg`      | string | 原始消息内容。                |
+| 字段名        | 类型     | 描述                    |
+|:-----------|:-------|:----------------------|
+| `id`       | string | 原始 API 请求的唯一 ID，可用于追踪 |
+| `msg_type` | string | 原始消息类型 (`text`)       |
+| `msg`      | string | 原始消息内容                |
 
 #### 数据格式
 
@@ -58,7 +58,7 @@ PostPoint 在调用 Webhook 时，会发送一个包含消息上下文的结构�
 
 ### 示例场景
 
-假设原始 API 收到的消息为：`{"msg": "今天我要做俯卧撑！……今天先俯卧，明天再撑。"}`；
+原始消息内容：`{"msg": "今天我要做俯卧撑！……今天先俯卧，明天再撑。"}`；
 原始 API 请求的唯一 ID：`{"id": "1234567EC64G97ZRAS211JHHX7"}`。
 
 #### 场景 1: 使用 `POST` 发送 `json` 数据
@@ -80,7 +80,7 @@ PostPoint 发出的请求:
 ```http
 POST /alerts
 Host: my-system.com
-Content-Type: application/json
+Content-Type: application/json; charset=utf-8
 X-Api-Key: your-secret-auth-token
 
 {

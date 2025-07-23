@@ -52,6 +52,18 @@ endpoint.url = "https://hooks.slack.com/services/T00000000/B00000000/XXXXXXXXXXX
 
 
 
+# Discord机器人
+[provider.discord_bot]
+
+# [必填] Webhook 服务器地址
+endpoint.url = "https://discord.com/api/webhooks/0000000000000000000/xxxxxx"
+
+# [可选] 通道代理：没有配置代理使用全局代理；配置了代理，通道使用自己的代理；配置不使用代理 proxy="no"。
+#proxy = "http://127.0.0.1:1080"
+
+
+
+
 # Webhook 文档: provider/webhook.md
 [provider.webhook]
 
