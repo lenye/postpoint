@@ -202,7 +202,7 @@ SDK。
 import requests
 import json
 
-postpoint_url = f"http://localhost:39270/text"
+apiUrl = f"http://localhost:39270/text"
 
 payload = {
     "msg": "来自 Python 的监控告警：\n> 服务 **API-Gateway** 在 5 分钟内错误率超过 5%。"
@@ -213,7 +213,7 @@ headers = {
 }
 
 try:
-    response = requests.post(postpoint_url, headers=headers, data=json.dumps(payload), timeout=10)
+    response = requests.post(apiUrl, headers=headers, data=json.dumps(payload), timeout=10)
     response.raise_for_status()  # 如果状态码不是 2xx，则会抛出异常
 
     # 打印成功响应
@@ -227,6 +227,179 @@ except requests.exceptions.RequestException as e:
     if e.response:
         print(f"状态码: {e.response.status_code}")
         print(f"响应内容: {e.response.text}")
+
+```
+
+### 使用 PHP
+
+```PHP
+<?php
+
+/**
+ * 使用 PostPoint API 发送消息。
+ *
+ * @param string $message 要发送的消息内容。
+ * @param string $apiUrl API 的完整 URL 地址。
+ * @return array 包含响应结果的关联数组 ['success' => bool, 'data' => array|string]
+ */
+function sendMessage(string $message, string $apiUrl): array
+{
+    // 1. 准备请求数据
+    // 要发送的数据 (PHP 关联数组)
+    $postData = [
+        'msg' => $message
+    ];
+
+    // 将数据编码为 JSON 字符串
+    $jsonData = json_encode($postData);
+
+    // 2. 设置请求头，完全符合文档要求
+    $headers = [
+        'Content-Type: application/json',
+        'Accept: application/json' // 最好也加上 Accept 头，以表明期望接收 JSON 响应
+    ];
+
+    // 3. 初始化 cURL 并设置选项
+    $ch = curl_init();
+
+    // 设置请求的 URL
+    curl_setopt($ch, CURLOPT_URL, $apiUrl);
+    // 设置为 POST 请求
+    curl_setopt($ch, CURLOPT_POST, true);
+    // 设置 POST 的数据体 (JSON 字符串)
+    curl_setopt($ch, CURLOPT_POSTFIELDS, $jsonData);
+    // 设置自定义请求头
+    curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+    // 将执行结果以字符串返回，而不是直接输出
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+    // 设置一个合理的超时时间 (例如：10秒)
+    curl_setopt($ch, CURLOPT_TIMEOUT, 10);
+
+    // 4. 执行请求
+    $responseBody = curl_exec($ch);
+    // 获取 HTTP 响应状态码
+    $httpStatusCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+
+    // 5. 检查 cURL 本身是否出错 (例如网络连接失败)
+    if (curl_errno($ch)) {
+        $error_msg = curl_error($ch);
+        curl_close($ch);
+        return ['success' => false, 'data' => 'cURL 请求错误: ' . $error_msg];
+    }
+
+    // 6. 关闭 cURL
+    curl_close($ch);
+
+    // 7. 根据 HTTP 状态码处理响应
+    $responseData = json_decode($responseBody, true); // 将 JSON 响应体解码为 PHP 数组
+
+    if ($httpStatusCode == 200) {
+        // 成功响应 (HTTP 200 OK)
+        return ['success' => true, 'data' => $responseData];
+    } else {
+        // 失败响应 (4xx 或 5xx)
+        return ['success' => false, 'data' => $responseData];
+    }
+}
+
+
+// --- 使用示例 ---
+
+// 请将这里的 URL 替换为您的实际 API 地址
+// 注意：文档中的 `/text` 是路径，需要拼接上主机地址
+$apiUrl = 'http://localhost:39270/text'; // 假设 API 服务运行在本地的 39270 端口
+
+echo "--- 正在尝试发送消息 ---\n";
+$result = sendMessage('测试，测试，测试', $apiUrl);
+
+if ($result['success']) {
+    echo "消息发送成功！\n";
+    echo "状态: " . $result['data']['code'] . "\n";
+    echo "信息: " . $result['data']['msg'] . "\n";
+    echo "消息 ID: " . $result['data']['id'] . "\n";
+} else {
+    // 即使逻辑上成功，但如果 API 端返回错误，也会进入这里
+    echo "API 返回错误！\n";
+    echo "HTTP 状态码: " . ($result['http_code'] ?? 'N/A') . "\n"; // http_code 不一定存在
+    echo "错误码: " . ($result['data']['code'] ?? '未知') . "\n";
+    echo "错误信息: " . ($result['data']['msg'] ?? '无法解析的错误') . "\n";
+    echo "请求 ID: " . ($result['data']['id'] ?? 'N/A') . "\n";
+}
+?>
+```
+
+### 使用 JavaScript
+
+```javascript
+/**
+ * 使用 API 发送消息。
+ * @param {string} message 要发送的消息内容。
+ * @param {string} apiUrl API 的完整 URL 地址。
+ * @returns {Promise<object>} 一个包含响应结果的对象 { success: boolean, data: object | string }
+ */
+async function sendMessage(message, apiUrl) {
+    // 1. 准备请求数据和请求头
+    const postData = {
+        msg: message
+    };
+
+    const requestOptions = {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json'
+        },
+        body: JSON.stringify(postData) // 必须将 JavaScript 对象转换为 JSON 字符串
+    };
+
+    try {
+        // 2. 发送 HTTP 请求
+        const response = await fetch(apiUrl, requestOptions);
+
+        // 3. 将响应体解析为 JSON
+        // response.json() 总是会尝试解析，即使是 4xx/5xx 错误
+        const responseData = await response.json();
+
+        // 4. 根据 HTTP 状态码判断成功或失败
+        // response.ok 为 true 表示 HTTP 状态码为 200-299
+        if (response.ok) {
+            // 成功响应 (HTTP 200 OK)
+            return { success: true, data: responseData };
+        } else {
+            // 失败响应 (HTTP 4xx or 5xx)
+            return { success: false, data: responseData, status: response.status };
+        }
+
+    } catch (error) {
+        // 捕获网络错误或 JSON 解析错误等
+        console.error('Request failed:', error);
+        return { success: false, error: error.message };
+    }
+}
+
+// --- 使用示例 ---
+
+// 请将这里的 URL 替换为您的实际 API 地址
+// 注意：文档中的 `/text` 是路径，需要拼接上主机地址
+const apiUrl = 'http://localhost:39270/text';
+
+console.log("--- 正在尝试发送消息 ---");
+sendMessage('测试，测试，测试', apiUrl).then(result => {
+    if (result.success) {
+        console.log("消息发送成功！");
+        console.log("状态:", result.data.code);
+        console.log("信息:", result.data.msg);
+        console.log("消息 ID:", result.data.id);
+    } else {
+        // 处理 API 返回的业务错误
+        console.log("API 返回错误！");
+        console.log("HTTP 状态码:", result.status);
+        console.log("错误码:", result.data.code);
+        console.log("错误信息:", result.data.msg);
+        console.log("请求 ID:", result.data.id);
+    }
+    console.log("\n----------------------------------------\n");
+});
 
 ```
 
