@@ -39,7 +39,7 @@ Use "postpoint [command] --help" for more information about a command.
 
 `PostPoint`下载 [最新版本](https://github.com/lenye/postpoint/releases/tag/v25.7.8-beta1)
 
-#### windows 操作系统
+#### Windows 操作系统
 
 1. 解压下载文件`postpoint_v25.7.8-beta1_windows_x86_64.zip`；
 2. 创建`config.toml`配置文件，保存到`postpoint.exe`相同目录下，配置一个新通道：**企业微信群机器人**；
@@ -338,43 +338,43 @@ if ($result['success']) {
  * @returns {Promise<object>} 一个包含响应结果的对象 { success: boolean, data: object | string }
  */
 async function sendMessage(message, apiUrl) {
-    // 1. 准备请求数据和请求头
-    const postData = {
-        msg: message
-    };
+   // 1. 准备请求数据和请求头
+   const postData = {
+      msg: message
+   };
 
-    const requestOptions = {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-            'Accept': 'application/json'
-        },
-        body: JSON.stringify(postData) // 必须将 JavaScript 对象转换为 JSON 字符串
-    };
+   const requestOptions = {
+      method: 'POST',
+      headers: {
+         'Content-Type': 'application/json',
+         'Accept': 'application/json'
+      },
+      body: JSON.stringify(postData) // 必须将 JavaScript 对象转换为 JSON 字符串
+   };
 
-    try {
-        // 2. 发送 HTTP 请求
-        const response = await fetch(apiUrl, requestOptions);
+   try {
+      // 2. 发送 HTTP 请求
+      const response = await fetch(apiUrl, requestOptions);
 
-        // 3. 将响应体解析为 JSON
-        // response.json() 总是会尝试解析，即使是 4xx/5xx 错误
-        const responseData = await response.json();
+      // 3. 将响应体解析为 JSON
+      // response.json() 总是会尝试解析，即使是 4xx/5xx 错误
+      const responseData = await response.json();
 
-        // 4. 根据 HTTP 状态码判断成功或失败
-        // response.ok 为 true 表示 HTTP 状态码为 200-299
-        if (response.ok) {
-            // 成功响应 (HTTP 200 OK)
-            return { success: true, data: responseData };
-        } else {
-            // 失败响应 (HTTP 4xx or 5xx)
-            return { success: false, data: responseData, status: response.status };
-        }
+      // 4. 根据 HTTP 状态码判断成功或失败
+      // response.ok 为 true 表示 HTTP 状态码为 200-299
+      if (response.ok) {
+         // 成功响应 (HTTP 200 OK)
+         return {success: true, data: responseData};
+      } else {
+         // 失败响应 (HTTP 4xx or 5xx)
+         return {success: false, data: responseData, status: response.status};
+      }
 
-    } catch (error) {
-        // 捕获网络错误或 JSON 解析错误等
-        console.error('Request failed:', error);
-        return { success: false, error: error.message };
-    }
+   } catch (error) {
+      // 捕获网络错误或 JSON 解析错误等
+      console.error('Request failed:', error);
+      return {success: false, error: error.message};
+   }
 }
 
 // --- 使用示例 ---
@@ -385,27 +385,27 @@ const apiUrl = 'http://localhost:39270/text';
 
 console.log("--- 正在尝试发送消息 ---");
 sendMessage('测试，测试，测试', apiUrl).then(result => {
-    if (result.success) {
-        console.log("消息发送成功！");
-        console.log("状态:", result.data.code);
-        console.log("信息:", result.data.msg);
-        console.log("消息 ID:", result.data.id);
-    } else {
-        // 处理 API 返回的业务错误
-        console.log("API 返回错误！");
-        console.log("HTTP 状态码:", result.status);
-        console.log("错误码:", result.data.code);
-        console.log("错误信息:", result.data.msg);
-        console.log("请求 ID:", result.data.id);
-    }
-    console.log("\n----------------------------------------\n");
+   if (result.success) {
+      console.log("消息发送成功！");
+      console.log("状态:", result.data.code);
+      console.log("信息:", result.data.msg);
+      console.log("消息 ID:", result.data.id);
+   } else {
+      // 处理 API 返回的业务错误
+      console.log("API 返回错误！");
+      console.log("HTTP 状态码:", result.status);
+      console.log("错误码:", result.data.code);
+      console.log("错误信息:", result.data.msg);
+      console.log("请求 ID:", result.data.id);
+   }
+   console.log("\n----------------------------------------\n");
 });
 
 ```
 
 ## 贡献
 
-欢迎创建 [Issue](https://github.com/lenye/postpoint/issues) 来帮助改进项目。
+如果你发现此软件存在问题，欢迎创建 [Issue](https://github.com/lenye/postpoint/issues) 来帮助改进项目。
 
 ## 免责声明
 
