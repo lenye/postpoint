@@ -37,11 +37,11 @@ Use "postpoint [command] --help" for more information about a command.
 
 ### 安装`PostPoint`
 
-`PostPoint`下载 [最新版本](https://github.com/lenye/postpoint/releases/tag/v25.7.8-beta1)
+`PostPoint`下载 [最新版本](https://github.com/lenye/postpoint/releases/tag/v25.8.0)
 
 #### Windows 操作系统
 
-1. 解压下载文件`postpoint_v25.7.8-beta1_windows_x86_64.zip`；
+1. 解压下载文件`postpoint_v25.8.0_windows_x86_64.zip`；
 2. 创建`config.toml`配置文件，保存到`postpoint.exe`相同目录下，配置一个新通道：**企业微信群机器人**；
     ```toml
     # 企业微信群机器人
