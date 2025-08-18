@@ -5,7 +5,7 @@ PostPoint 提供了一个统一、高可用的 API 接口，你无需关心各�
 
 * 极致简化： 单一 API，告别重复开发和维护。
 * 智能可靠： 内置失败自动重试，并智能遵守各平台发送频率，确保消息100%稳定触达。
-* 全面覆盖： 无缝支持企业微信、飞书、钉钉、Slack、Discord 及通用Webhook。
+* 全面覆盖： 无缝支持企业微信、飞书、钉钉、Slack、Discord、Mattermost 及通用Webhook。
 
 ## 支持的操作系统
 
@@ -18,7 +18,7 @@ PostPoint 提供了一个统一、高可用的 API 接口，你无需关心各�
 
 ```shell
 C:\>postpoint.exe -h
-一个 API 请求将消息发送到企业微信、飞书、钉钉、Slack、Discord、Webhook
+一个 API 请求将消息发送到企业微信、飞书、钉钉、Slack、Discord、Mattermost、Webhook
 
 Usage:
   postpoint [command]
@@ -26,7 +26,7 @@ Usage:
 Available Commands:
   help        Help about any command
   serve       API / OpenAPI / Swagger UI 服务，消息推送服务
-  test        测试已配置的企业微信群机器人、飞书自定义机器人、钉钉自定义机器人、Slack机器人、Discord机器人、Webhook
+  test        测试已配置的企业微信群机器人、飞书自定义机器人、钉钉自定义机器人、Slack机器人、Discord机器人、Mattermost机器人、Webhook
 
 Flags:
   -h, --help      help for postpoint
@@ -338,43 +338,43 @@ if ($result['success']) {
  * @returns {Promise<object>} 一个包含响应结果的对象 { success: boolean, data: object | string }
  */
 async function sendMessage(message, apiUrl) {
-   // 1. 准备请求数据和请求头
-   const postData = {
-      msg: message
-   };
+    // 1. 准备请求数据和请求头
+    const postData = {
+        msg: message
+    };
 
-   const requestOptions = {
-      method: 'POST',
-      headers: {
-         'Content-Type': 'application/json',
-         'Accept': 'application/json'
-      },
-      body: JSON.stringify(postData) // 必须将 JavaScript 对象转换为 JSON 字符串
-   };
+    const requestOptions = {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json'
+        },
+        body: JSON.stringify(postData) // 必须将 JavaScript 对象转换为 JSON 字符串
+    };
 
-   try {
-      // 2. 发送 HTTP 请求
-      const response = await fetch(apiUrl, requestOptions);
+    try {
+        // 2. 发送 HTTP 请求
+        const response = await fetch(apiUrl, requestOptions);
 
-      // 3. 将响应体解析为 JSON
-      // response.json() 总是会尝试解析，即使是 4xx/5xx 错误
-      const responseData = await response.json();
+        // 3. 将响应体解析为 JSON
+        // response.json() 总是会尝试解析，即使是 4xx/5xx 错误
+        const responseData = await response.json();
 
-      // 4. 根据 HTTP 状态码判断成功或失败
-      // response.ok 为 true 表示 HTTP 状态码为 200-299
-      if (response.ok) {
-         // 成功响应 (HTTP 200 OK)
-         return {success: true, data: responseData};
-      } else {
-         // 失败响应 (HTTP 4xx or 5xx)
-         return {success: false, data: responseData, status: response.status};
-      }
+        // 4. 根据 HTTP 状态码判断成功或失败
+        // response.ok 为 true 表示 HTTP 状态码为 200-299
+        if (response.ok) {
+            // 成功响应 (HTTP 200 OK)
+            return {success: true, data: responseData};
+        } else {
+            // 失败响应 (HTTP 4xx or 5xx)
+            return {success: false, data: responseData, status: response.status};
+        }
 
-   } catch (error) {
-      // 捕获网络错误或 JSON 解析错误等
-      console.error('Request failed:', error);
-      return {success: false, error: error.message};
-   }
+    } catch (error) {
+        // 捕获网络错误或 JSON 解析错误等
+        console.error('Request failed:', error);
+        return {success: false, error: error.message};
+    }
 }
 
 // --- 使用示例 ---
@@ -385,20 +385,20 @@ const apiUrl = 'http://localhost:39270/text';
 
 console.log("--- 正在尝试发送消息 ---");
 sendMessage('测试，测试，测试', apiUrl).then(result => {
-   if (result.success) {
-      console.log("消息发送成功！");
-      console.log("状态:", result.data.code);
-      console.log("信息:", result.data.msg);
-      console.log("消息 ID:", result.data.id);
-   } else {
-      // 处理 API 返回的业务错误
-      console.log("API 返回错误！");
-      console.log("HTTP 状态码:", result.status);
-      console.log("错误码:", result.data.code);
-      console.log("错误信息:", result.data.msg);
-      console.log("请求 ID:", result.data.id);
-   }
-   console.log("\n----------------------------------------\n");
+    if (result.success) {
+        console.log("消息发送成功！");
+        console.log("状态:", result.data.code);
+        console.log("信息:", result.data.msg);
+        console.log("消息 ID:", result.data.id);
+    } else {
+        // 处理 API 返回的业务错误
+        console.log("API 返回错误！");
+        console.log("HTTP 状态码:", result.status);
+        console.log("错误码:", result.data.code);
+        console.log("错误信息:", result.data.msg);
+        console.log("请求 ID:", result.data.id);
+    }
+    console.log("\n----------------------------------------\n");
 });
 
 ```

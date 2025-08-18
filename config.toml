@@ -64,6 +64,15 @@ endpoint.url = "https://discord.com/api/webhooks/0000000000000000000/xxxxxx"
 
 
 
+# Mattermost机器人
+[provider.mattermost_bot]
+
+# [必填] Webhook 服务器地址
+endpoint.url = "https://mattermost_domain/hooks/xxxxxx"
+
+
+
+
 # Webhook 文档: provider/webhook.md
 [provider.webhook]
 
