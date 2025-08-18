@@ -37,7 +37,7 @@ Use "postpoint [command] --help" for more information about a command.
 
 ### 安装`PostPoint`
 
-`PostPoint`下载 [最新版本](https://github.com/lenye/postpoint/releases/tag/v25.8.1-beta1)
+`PostPoint`下载 [最新版本](https://github.com/lenye/postpoint/releases/tag/v25.8.2-beta1)
 
 #### Windows 操作系统
 
