@@ -215,6 +215,11 @@ host = "localhost"
 #
 # 默认值: 39270
 port = 39270
+
+# [可选] 自定义 HTTP 请求头。
+# 可用于身份验证，例如传递一个固定的 Api-Key，以防止未经授权的访问和操作。
+[api.headers]
+X-Api-Key = "your-secret-auth-token"
 ```
 
 #### 关键概念与安全实践

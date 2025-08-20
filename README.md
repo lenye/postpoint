@@ -37,11 +37,11 @@ Use "postpoint [command] --help" for more information about a command.
 
 ### 安装`PostPoint`
 
-`PostPoint`下载 [最新版本](https://github.com/lenye/postpoint/releases/tag/v25.8.2-beta1)
+`PostPoint`下载 [最新版本](https://github.com/lenye/postpoint/releases/tag/v25.8.3)
 
 #### Windows 操作系统
 
-1. 解压下载文件`postpoint_v25.8.1-beta1_windows_x86_64.zip`；
+1. 解压下载文件`postpoint_v25.8.3_windows_x86_64.zip`；
 2. 创建`config.toml`配置文件，保存到`postpoint.exe`相同目录下，配置一个新通道：**企业微信群机器人**；
     ```toml
     # 企业微信群机器人
@@ -59,7 +59,7 @@ Use "postpoint [command] --help" for more information about a command.
 4. 运行`postpoint.exe serve`，开始消息推送 API 服务；
    ```shell
    C:\>postpoint.exe serve
-   2025-07-01T22:07:01.627+0800    info    PostPoint Free v25.7.8-beta1 windows/amd64, https://github.com/lenye/postpoint
+   2025-07-01T22:07:01.627+0800    info    PostPoint Free v25.8.3 windows/amd64, https://github.com/lenye/postpoint
    2025-07-01T22:07:01.667+0800    info    url    {"API": "http://localhost:39270/text", "Swagger UI": "http://localhost:39270/swagger/", "OpenAPI": "http://localhost:39270/swagger/openapi.yaml"}
    ```   
 
@@ -81,6 +81,62 @@ Use "postpoint [command] --help" for more information about a command.
 * Endpoint: http://localhost:39270/text
 * 数据格式: 请求和响应数据编码均为 UTF-8。支持 application/json 和 application/x-www-form-urlencoded 两种提交方式。
 
+### 幂等消息
+
+为确保在网络不稳定或客户端重试等情况下，API请求能够被安全地重复调用，而不会产生非预期的副作用（例如重复创建资源或多次执行同一操作），我们引入了幂等性（Idempotency）设计。
+
+通过追踪唯一的`msg_id`，系统能够识别并处理重复的请求，从而保证接口的幂等性。
+
+#### 工作原理
+
+当你发起一个请求时，服务器会检查你提供的`msg_id`。
+
+* **首次请求**：如果该`msg_id`是第一次被接收，API 服务器会正常处理该请求，并缓存请求的结果。
+* **重复请求**：如果在 2 分钟的窗口期内，API 服务器再次接收到具有相同`msg_id`的请求，它将不会重新处理该请求，而是直接返回响应结果。
+  这可以防止意外的重复操作，并确保数据的一致性。
+
+**追踪窗口**：API 服务器会追踪过去 2 分钟内所有请求的`msg_id`。超过此窗口期的`msg_id`将被丢弃，如果客户端在 2 分钟后使用相同的
+`msg_id`再次发送请求，该请求将被视为一个全新的请求进行处理。
+
+#### 如何发送幂等请求
+
+为了利用幂等性保障，客户端需要在请求中提供一个唯一的`msg_id`。系统通过以下方式确定`msg_id`：
+
+1. **默认行为**：
+   默认情况下，系统会生成唯一 ID 作为`msg_id`。
+
+2. **自定义`msg_id`**：
+   我们强烈建议你通过在 HTTP 请求头（Header）中提供一个自定义的唯一标识符来主动控制幂等性。为此，你需要添加
+   `X-Ppt-Request-ID`
+   字段。
+
+    * **Header名称**：`X-Ppt-Request-ID`
+    * **值**：一个由客户端生成的、独一无二的字符串（例如UUID v4），以确保其唯一性。
+
+   当请求头中包含`X-Ppt-Request-ID`且其内容不为空时，系统将使用该`request_id`作为`msg_id`。
+
+    ```http
+    POST /text
+    Content-Type: application/json
+    X-Ppt-Request-ID: a-unique-uuid-v4-string
+    
+    {
+        "msg": "测试，测试，测试"
+    }
+    
+    
+    
+    HTTP/1.1 200 OK
+    Content-Type: application/json
+    
+    {
+        "code": "ok",
+        "msg": "success",
+        "id": "1234567EC64G97ZRAS211JHHX7",
+        "request_id": "a-unique-uuid-v4-string"
+    }
+    ```
+
 ### 请求参数
 
 请求体 (Body)
@@ -91,11 +147,12 @@ Use "postpoint [command] --help" for more information about a command.
 
 ### 响应数据
 
-| 字段名    | 类型     | 描述                      |
-|:-------|:-------|:------------------------|
-| `code` | string | 结果代码，`ok` 表示成功          |
-| `msg`  | string | 结果描述                    |
-| `id`   | string | 本次请求的唯一 ID，可用于问题排查和日志跟踪 |
+| 字段名          | 类型     | 描述                                             |
+|:-------------|:-------|:-----------------------------------------------|
+| `code`       | string | 结果代码，`ok` 表示成功                                 |
+| `msg`        | string | 结果描述                                           |
+| `id`         | string | 本次请求的唯一 ID，可用于问题排查和日志跟踪                        |
+| `request_id` | string | 本次请求ID，来自 request.http.header.X-Ppt-Request-ID |
 
 使用 API 发送消息，发出如下所示的 HTTP POST 请求：
 
@@ -305,7 +362,7 @@ function sendMessage(string $message, string $apiUrl): array
 
 // --- 使用示例 ---
 
-// 请将这里的 URL 替换为您的实际 API 地址
+// 请将这里的 URL 替换为你的实际 API 地址
 // 注意：文档中的 `/text` 是路径，需要拼接上主机地址
 $apiUrl = 'http://localhost:39270/text'; // 假设 API 服务运行在本地的 39270 端口
 
@@ -379,7 +436,7 @@ async function sendMessage(message, apiUrl) {
 
 // --- 使用示例 ---
 
-// 请将这里的 URL 替换为您的实际 API 地址
+// 请将这里的 URL 替换为你的实际 API 地址
 // 注意：文档中的 `/text` 是路径，需要拼接上主机地址
 const apiUrl = 'http://localhost:39270/text';
 
