@@ -5,7 +5,8 @@ PostPoint 提供了一个统一、高可用的 API 接口，你无需关心各�
 
 * 极致简化： 单一 API，告别重复开发和维护。
 * 智能可靠： 内置失败自动重试，并智能遵守各平台发送频率，确保消息100%稳定触达。
-* 全面覆盖： 无缝支持企业微信、飞书、钉钉、Slack、Discord、Mattermost 及通用Webhook。
+* 全面覆盖： 无缝支持企业微信群机器人、飞书自定义机器人、钉钉自定义机器人、Slack机器人、Discord机器人、Mattermost机器人和通用Webhook。
+* 无限期推送日志：每一次推送（无论成功与否）的详细信息都被永久记录。
 
 ## 支持的操作系统
 
@@ -37,11 +38,11 @@ Use "postpoint [command] --help" for more information about a command.
 
 ### 安装`PostPoint`
 
-`PostPoint`下载 [最新版本](https://github.com/lenye/postpoint/releases/tag/v25.8.3)
+`PostPoint`下载 [最新版本](https://github.com/lenye/postpoint/releases/tag/v25.9.0)
 
 #### Windows 操作系统
 
-1. 解压下载文件`postpoint_v25.8.3_windows_x86_64.zip`；
+1. 解压下载文件`postpoint_v25.9.0_windows_x86_64.zip`；
 2. 创建`config.toml`配置文件，保存到`postpoint.exe`相同目录下，配置一个新通道：**企业微信群机器人**；
     ```toml
     # 企业微信群机器人
@@ -59,8 +60,7 @@ Use "postpoint [command] --help" for more information about a command.
 4. 运行`postpoint.exe serve`，开始消息推送 API 服务；
    ```shell
    C:\>postpoint.exe serve
-   2025-07-01T22:07:01.627+0800    info    PostPoint Free v25.8.3 windows/amd64, https://github.com/lenye/postpoint
-   2025-07-01T22:07:01.667+0800    info    url    {"API": "http://localhost:39270/text", "Swagger UI": "http://localhost:39270/swagger/", "OpenAPI": "http://localhost:39270/swagger/openapi.yaml"}
+   2025-07-01T22:07:01.627+0800    info    PostPoint Free v25.9.0 windows/amd64, https://github.com/lenye/postpoint
    ```   
 
 运行`postpoint.exe test -h`查看通道的测试命令。
@@ -71,6 +71,10 @@ Use "postpoint [command] --help" for more information about a command.
 
 如果你顺利完成了以上步骤，那么恭喜你，属于你的`PostPoint`搭建成功。
 
+#### 查看推送日志
+
+http://localhost:39270/log
+
 ### 通道集成指南
 
 `PostPoint`配置文件的详细定义，请参考[通道集成指南](provider/README.md)，样例配置文件 [config.toml](config.toml)
@@ -78,7 +82,7 @@ Use "postpoint [command] --help" for more information about a command.
 ## 调用 API 发送消息
 
 * HTTP 方法: POST
-* Endpoint: http://localhost:39270/text
+* Endpoint: http://localhost:39270/api/text
 * 数据格式: 请求和响应数据编码均为 UTF-8。支持 application/json 和 application/x-www-form-urlencoded 两种提交方式。
 
 ### 幂等消息
@@ -116,7 +120,7 @@ Use "postpoint [command] --help" for more information about a command.
    当请求头中包含`X-Ppt-Request-ID`且其内容不为空时，系统将使用该`request_id`作为`msg_id`。
 
     ```http
-    POST /text
+    POST /api/text
     Content-Type: application/json
     X-Ppt-Request-ID: a-unique-uuid-v4-string
     
@@ -157,7 +161,7 @@ Use "postpoint [command] --help" for more information about a command.
 使用 API 发送消息，发出如下所示的 HTTP POST 请求：
 
 ```
-POST /text
+POST /api/text
 Content-type: application/json
 
 {
@@ -225,14 +229,14 @@ SDK。
 1. 发送 json 数据
     ```shell
     # linux 环境
-    $ curl -X 'POST' 'http://localhost:39270/text' \
+    $ curl -X 'POST' 'http://localhost:39270/api/text' \
       -H 'Accept: application/json' \
       -H 'Content-Type: application/json' \
       -d '{"msg": "测试，测试，测试"}'
    
    
     # windows 环境
-    C:\>curl -X "POST" "http://localhost:39270/text" ^
+    C:\>curl -X "POST" "http://localhost:39270/api/text" ^
       -H "Accept: application/json" ^
       -H "Content-Type: application/json" ^
       -d "{\"msg\": \"测试，测试，测试\"}"         
@@ -240,14 +244,14 @@ SDK。
 2. 发送 form 数据
     ```shell
     # linux 环境
-    $ curl -X 'POST' 'http://localhost:39270/text' \
+    $ curl -X 'POST' 'http://localhost:39270/api/text' \
       -H 'Accept: application/json' \
       -H 'Content-Type: application/x-www-form-urlencoded' \
       -d 'msg=测试，测试，测试'
    
    
     # windows 环境
-    C:\>curl -X "POST" "http://localhost:39270/text" ^
+    C:\>curl -X "POST" "http://localhost:39270/api/text" ^
       -H "Accept: application/json" ^
       -H "Content-Type: application/x-www-form-urlencoded" ^
       -d "msg=测试，测试，测试"
@@ -259,7 +263,7 @@ SDK。
 import requests
 import json
 
-apiUrl = f"http://localhost:39270/text"
+apiUrl = f"http://localhost:39270/api/text"
 
 payload = {
     "msg": "来自 Python 的监控告警：\n> 服务 **API-Gateway** 在 5 分钟内错误率超过 5%。"
@@ -364,7 +368,7 @@ function sendMessage(string $message, string $apiUrl): array
 
 // 请将这里的 URL 替换为你的实际 API 地址
 // 注意：文档中的 `/text` 是路径，需要拼接上主机地址
-$apiUrl = 'http://localhost:39270/text'; // 假设 API 服务运行在本地的 39270 端口
+$apiUrl = 'http://localhost:39270/api/text'; // 假设 API 服务运行在本地的 39270 端口
 
 echo "--- 正在尝试发送消息 ---\n";
 $result = sendMessage('测试，测试，测试', $apiUrl);
@@ -438,7 +442,7 @@ async function sendMessage(message, apiUrl) {
 
 // 请将这里的 URL 替换为你的实际 API 地址
 // 注意：文档中的 `/text` 是路径，需要拼接上主机地址
-const apiUrl = 'http://localhost:39270/text';
+const apiUrl = 'http://localhost:39270/api/text';
 
 console.log("--- 正在尝试发送消息 ---");
 sendMessage('测试，测试，测试', apiUrl).then(result => {
