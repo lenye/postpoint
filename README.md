@@ -75,6 +75,10 @@ Use "postpoint [command] --help" for more information about a command.
 
 http://localhost:39270/log
 
+服务的默认端口：39270，实际使用更改为你配置的端口（config.toml）。
+
+执行通道的测试命令`postpoint.exe test`，不产生推送日志；调用 API 发送消息`postpoint.exe serve`，记录推送日志。
+
 ### 通道集成指南
 
 `PostPoint`配置文件的详细定义，请参考[通道集成指南](provider/README.md)，样例配置文件 [config.toml](config.toml)
