@@ -38,11 +38,11 @@ Use "postpoint [command] --help" for more information about a command.
 
 ### 安装`PostPoint`
 
-`PostPoint`下载 [最新版本](https://github.com/lenye/postpoint/releases/tag/v25.9.1)
+`PostPoint`下载 [最新版本](https://github.com/lenye/postpoint/releases/tag/v25.10.1)
 
 #### Windows 操作系统
 
-1. 解压下载文件`postpoint_v25.9.1_windows_x86_64.zip`；
+1. 解压下载文件`postpoint_v25.10.1_windows_x86_64.zip`；
 2. 创建`config.toml`配置文件，保存到`postpoint.exe`相同目录下，配置一个新通道：**企业微信群机器人**；
     ```toml
     # 企业微信群机器人
@@ -60,7 +60,7 @@ Use "postpoint [command] --help" for more information about a command.
 4. 运行`postpoint.exe serve`，开始消息推送 API 服务；
    ```shell
    C:\>postpoint.exe serve
-   2025-07-01T22:07:01.627+0800    info    PostPoint Free v25.9.1 windows/amd64, https://github.com/lenye/postpoint
+   2025-07-01T22:07:01.627+0800    info    PostPoint Free v25.10.1 windows/amd64, https://github.com/lenye/postpoint
    ```   
 
 运行`postpoint.exe test -h`查看通道的测试命令。
@@ -71,9 +71,11 @@ Use "postpoint [command] --help" for more information about a command.
 
 如果你顺利完成了以上步骤，那么恭喜你，属于你的`PostPoint`搭建成功。
 
+开始发消息: http://localhost:39270/send
+
 #### 查看推送日志
 
-http://localhost:39270/log
+推送日志页面: http://localhost:39270/log
 
 服务的默认端口：39270，实际使用更改为你配置的端口（config.toml）。
 

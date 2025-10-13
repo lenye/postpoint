@@ -4,9 +4,6 @@
 # [必填] Webhook 服务器地址
 endpoint.url = "https://qyapi.weixin.qq.com/cgi-bin/webhook/send?key=xxxxxx"
 
-# [可选] 每分钟最高速率=18次，最多20次
-rate_limit.minute.burst = 18
-
 
 
 
@@ -18,12 +15,6 @@ endpoint.url = "https://open.feishu.cn/open-apis/bot/v2/hook/xxxxxx"
 
 # [可选] 签名密钥
 secret = "xxx"
-
-# [可选] 每分钟最高速率=98次，最多100次
-rate_limit.minute.burst = 98
-
-# [可选] 每秒4次，最多5次
-rate_limit.rate.frequency = 4
 
 
 
