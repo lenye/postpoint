@@ -71,13 +71,13 @@ Use "postpoint [command] --help" for more information about a command.
 
 如果你顺利完成了以上步骤，那么恭喜你，属于你的`PostPoint`搭建成功。
 
-开始发消息: http://localhost:39270/send
+服务的默认端口：39270，实际使用更改为你配置的端口（config.toml）。
+
+访问页面: http://localhost:39270/send ，开始发消息。
 
 #### 查看推送日志
 
-推送日志页面: http://localhost:39270/log
-
-服务的默认端口：39270，实际使用更改为你配置的端口（config.toml）。
+访问页面: http://localhost:39270/log ，查看推送日志。
 
 执行通道的测试命令`postpoint.exe test`，不产生推送日志；调用 API 发送消息`postpoint.exe serve`，记录推送日志。
 
