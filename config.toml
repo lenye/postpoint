@@ -1,4 +1,4 @@
-# 企业微信群机器人
+# 企业微信群机器人 配置段
 [provider.workweixin_bot]
 
 # [必填] Webhook 服务器地址
@@ -7,7 +7,7 @@ endpoint.url = "https://qyapi.weixin.qq.com/cgi-bin/webhook/send?key=xxxxxx"
 
 
 
-# 飞书自定义机器人
+# 飞书自定义机器人 配置段
 [provider.feishu_bot]
 
 # [必填] Webhook 服务器地址
@@ -19,7 +19,7 @@ secret = "xxx"
 
 
 
-# 钉钉自定义机器人
+# 钉钉自定义机器人 配置段
 [provider.dingtalk_bot]
 
 # [必填] Webhook 服务器地址
@@ -31,7 +31,7 @@ secret = "xxx"
 
 
 
-# Slack机器人
+# Slack机器人 配置段
 [provider.slack_bot]
 
 # [必填] Webhook 服务器地址
@@ -43,7 +43,7 @@ endpoint.url = "https://hooks.slack.com/services/T00000000/B00000000/XXXXXXXXXXX
 
 
 
-# Discord机器人
+# Discord机器人 配置段
 [provider.discord_bot]
 
 # [必填] Webhook 服务器地址
@@ -55,7 +55,7 @@ endpoint.url = "https://discord.com/api/webhooks/0000000000000000000/xxxxxx"
 
 
 
-# Mattermost机器人
+# Mattermost机器人 配置段
 [provider.mattermost_bot]
 
 # [必填] Webhook 服务器地址
@@ -64,7 +64,7 @@ endpoint.url = "https://mattermost_domain/hooks/xxxxxx"
 
 
 
-# Webhook 文档: provider/webhook.md
+# Webhook 配置段
 [provider.webhook]
 
 # [必填] Webhook 服务器地址
@@ -93,7 +93,7 @@ X-Source = "PostPoint"
 
 
 
-# 发送消息
+# 发送消息 配置段
 [delivery]
 # [可选] 全局代理：所有通道使用这个代理，除非通道自己配置了代理；
 # 代理url格式：
@@ -115,7 +115,7 @@ interval = 10
 
 
 
-# api 端口配置
+# api 配置段
 [api]
 
 # [可选] host="localhost"，只能在本机访问；host=""，可以对外服务。
@@ -134,7 +134,7 @@ X-Api-Key = "your-secret-auth-token"
 
 
 
-# 日志配置
+# 日志 配置段
 [log]
 
 # 屏幕显示

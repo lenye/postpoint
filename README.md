@@ -71,15 +71,27 @@ Use "postpoint [command] --help" for more information about a command.
 
 如果你顺利完成了以上步骤，那么恭喜你，属于你的`PostPoint`搭建成功。
 
-服务的默认端口：39270，实际使用更改为你配置的端口（config.toml）。
+访问页面: http://localhost:39270/send ，开始**发消息**。
 
-访问页面: http://localhost:39270/send ，开始发消息。
+访问页面: http://localhost:39270/log ，查看**推送日志**。
 
-#### 查看推送日志
+*执行通道的测试命令`postpoint.exe test`，无推送日志；`postpoint.exe serve`启动服务后，调用 API 发送消息，记录推送日志。*
 
-访问页面: http://localhost:39270/log ，查看推送日志。
+#### 配置监听端口
 
-执行通道的测试命令`postpoint.exe test`，不产生推送日志；调用 API 发送消息`postpoint.exe serve`，记录推送日志。
+API 服务的默认监听端口是 39270。
+
+配置修改步骤：
+
+1. 打开`config.toml`配置文件。
+2. 找到`[api]`配置段。
+3. 将`port`参数的值修改为你希望使用的端口号。
+4. 保存文件并重启 API 服务，以使更改生效。
+
+**建议：**
+
+* 确保你选择的端口没有被其他服务占用。
+* 如果服务部署的云环境中有防火墙，请确保在防火墙规则中允许流量通过你配置的端口。
 
 ### 通道集成指南
 
