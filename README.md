@@ -486,10 +486,6 @@ sendMessage('测试，测试，测试', apiUrl).then(result => {
 
 如果你发现此软件存在问题，欢迎创建 [Issue](https://github.com/lenye/postpoint/issues) 帮助改进项目。
 
-加入交流 QQ 群 [833299538](https://qm.qq.com/q/bWvg7YWsh2)（群内互帮互助，禁止发任何与 PostPoint 使用无关的内容）
-
-![扫一扫二维码加入群聊](pic/qq.jpg "扫一扫二维码加入群聊")
-
 ## 免责声明
 
 本软件仅供学习和研究之用，使用本软件的风险由你自行承担，我们对使用本软件时产生的任何损失概不负责。
